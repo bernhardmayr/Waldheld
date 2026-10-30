@@ -8,6 +8,7 @@ Stand: 30.10.2026. Alle Phasen 0–5 sind in einer ersten vollständigen Fassung
 - [x] PWA (vite-plugin-pwa, Precache, App-Icons, offline spielbar), Andika lokal (nur Latin-Subset)
 - [x] GitHub Actions: lint → typecheck → test → build → e2e → Deploy auf GitHub Pages (`main`/`master`)
 - [x] `base` = `/Waldheld/` (Repo-Name mit großem W; Pages-Pfade sind case-sensitiv)
+- [x] GitHub Pages aktiviert (Settings → Pages → Source: GitHub Actions); App: https://bernhardmayr.github.io/Waldheld/
 
 ## Phase 1 – Kern und erste Stationen
 - [x] Store mit Persistenz (`waldheld:progress`, `waldheld:settings`) und Migrationen (`schemaVersion`)
