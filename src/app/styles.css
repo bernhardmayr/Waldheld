@@ -1,0 +1,2522 @@
+:root {
+  --wald: #2f6b3b;
+  --moos: #7fa650;
+  --rinde: #6b4a2b;
+  --orange: #d9822b;
+  --rot: #b83a2e;
+  --himmel: #cde7f0;
+  --papier: #fbf7ee;
+  --text: #2b2b2b;
+  --karte: #fffdf8;
+  --rand: #e3dccb;
+  --gelb: #f6c33b;
+  --schatten: 0 3px 0 rgba(0, 0, 0, 0.12), 0 6px 16px rgba(0, 0, 0, 0.08);
+  --ziel: 56px;
+  font-family: 'Andika', system-ui, sans-serif;
+  font-size: 20px;
+  color: var(--text);
+  background: var(--papier);
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--papier);
+  overscroll-behavior: none;
+}
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+h1 {
+  font-size: 1.6rem;
+  margin: 0.2em 0;
+  color: var(--wald);
+}
+h2 {
+  font-size: 1.3rem;
+  margin: 0.3em 0;
+}
+h3 {
+  font-size: 1.05rem;
+  margin: 0.3em 0;
+}
+a {
+  color: var(--wald);
+}
+.klein {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+.hinweis {
+  font-size: 0.9rem;
+  color: #5a5a5a;
+  margin: 0.3em 0;
+}
+.emoji {
+  font-size: 1.4em;
+}
+
+/* ---------- Knöpfe ---------- */
+.knopf {
+  min-height: var(--ziel);
+  min-width: var(--ziel);
+  padding: 0.4em 1.1em;
+  border: none;
+  border-radius: 16px;
+  background: var(--wald);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 4px 0 #1f4a28;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  margin: 4px;
+  touch-action: manipulation;
+}
+.knopf:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #1f4a28;
+}
+.knopf:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.knopf.leise {
+  background: #fff;
+  color: var(--wald);
+  border: 2px solid var(--wald);
+  box-shadow: 0 3px 0 #c8d8c0;
+}
+.knopf.gross {
+  font-size: 1.2rem;
+  padding: 0.5em 1.6em;
+}
+.knopf.klein {
+  min-height: 44px;
+  font-size: 0.85rem;
+  padding: 0.2em 0.7em;
+}
+.knopf.gefahr {
+  background: var(--rot);
+  box-shadow: 0 4px 0 #7a1a10;
+}
+.knopf.rund {
+  border-radius: 50%;
+  padding: 0;
+  font-size: 1.4rem;
+}
+.knopf.weiter {
+  background: var(--orange);
+  box-shadow: 0 4px 0 #8a4a1a;
+  margin-top: 12px;
+}
+.knopf.energie {
+  background: #b07a10;
+  box-shadow: 0 4px 0 #6a4a08;
+}
+.speak {
+  border: none;
+  background: #fff;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 2px 0 var(--rand);
+  flex: none;
+  vertical-align: middle;
+}
+.speak-klein {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+}
+.chip {
+  min-height: 48px;
+  padding: 0.2em 0.9em;
+  border-radius: 999px;
+  border: 2px solid var(--rand);
+  background: #fff;
+  cursor: pointer;
+  margin: 4px;
+}
+.chip.an {
+  background: var(--wald);
+  color: #fff;
+  border-color: var(--wald);
+}
+
+/* ---------- Layout ---------- */
+.app {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.leiste {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  background: var(--wald);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  flex-wrap: wrap;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.logo svg {
+  background: var(--papier);
+  border-radius: 50%;
+}
+.eicheln {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--papier);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 4px 14px 4px 8px;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+}
+.eicheln.bump {
+  transform: scale(1.18);
+}
+.rang {
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+.menue {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.menue a {
+  min-width: var(--ziel);
+  min-height: var(--ziel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.35rem;
+  border-radius: 12px;
+  padding: 2px 6px;
+}
+.menue a span {
+  font-size: 0.6rem;
+}
+.menue a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+.menue a.neu::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--gelb);
+  border-radius: 50%;
+  position: absolute;
+  margin: -24px 0 0 26px;
+}
+.inhalt {
+  flex: 1;
+  padding: 12px 16px 24px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 16px;
+  z-index: 100;
+  animation: rein 0.3s ease-out;
+}
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 90;
+  padding: 16px;
+}
+.dialog {
+  background: var(--papier);
+  border-radius: 24px;
+  padding: 24px;
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  max-height: 90vh;
+  overflow: auto;
+}
+.sprechblase {
+  background: #fff;
+  border: 3px solid var(--wald);
+  border-radius: 20px;
+  padding: 10px 14px;
+  position: relative;
+  font-size: 0.95rem;
+}
+.sprechblase.gross {
+  font-size: 1.2rem;
+  max-width: 640px;
+  margin: 12px auto;
+}
+
+/* ---------- Start ---------- */
+.start {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  text-align: center;
+  background: linear-gradient(var(--himmel), var(--papier) 60%);
+}
+.start-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+.start-form input[type='text'],
+.start-form input:not([type]) {
+  font-size: 1.3rem;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 3px solid var(--moos);
+  display: block;
+  margin-top: 6px;
+  text-align: center;
+}
+fieldset {
+  border: none;
+  display: flex;
+  gap: 10px;
+  padding: 0;
+}
+fieldset legend {
+  margin-bottom: 6px;
+}
+.wahl {
+  border: 3px solid var(--rand);
+  border-radius: 14px;
+  padding: 10px 16px;
+  background: #fff;
+  cursor: pointer;
+  min-height: var(--ziel);
+}
+.wahl.an {
+  border-color: var(--wald);
+  background: #e9f3e3;
+}
+.schalter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+.schalter input {
+  width: 28px;
+  height: 28px;
+}
+
+/* ---------- Waldkarte ---------- */
+.karte-screen {
+  position: relative;
+}
+.waldkarte {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9.5;
+  max-height: calc(100dvh - 190px);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--schatten);
+  min-height: 520px;
+}
+.karte-hg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.ort {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+.ort-knopf {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text);
+  width: 118px;
+  position: relative;
+}
+.ort-bild {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--wald);
+  box-shadow: var(--schatten);
+  font-size: 28px;
+}
+.typ-zusatz .ort-bild {
+  border-color: var(--orange);
+}
+.typ-abschluss .ort-bild {
+  border-color: var(--gelb);
+  background: #fff7dc;
+}
+.ort-knopf.besucht .ort-bild {
+  background: #e9f3e3;
+}
+.ort-knopf.empfohlen .ort-bild {
+  animation: puls 1.6s infinite;
+}
+.ort-knopf.gesperrt {
+  opacity: 0.55;
+}
+.ort-symbol {
+  position: absolute;
+  top: -4px;
+  right: 18px;
+  background: var(--wald);
+  color: #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.typ-zusatz .ort-symbol {
+  background: var(--orange);
+}
+.typ-abschluss .ort-symbol {
+  background: var(--gelb);
+}
+.ort-name {
+  background: rgba(255, 253, 248, 0.92);
+  border-radius: 10px;
+  padding: 1px 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.15;
+  margin-top: 3px;
+}
+.karte-pinsel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.karte-pinsel .sprechblase {
+  flex: 1;
+  padding: 6px 12px;
+}
+.sterne {
+  color: #d6cfbd;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+.sterne .an {
+  color: #e8a400;
+}
+.sterne.gross {
+  font-size: 3rem;
+}
+.sterne.gross .an {
+  display: inline-block;
+  animation: stern 0.5s backwards;
+}
+
+/* ---------- Station ---------- */
+.station-info {
+  display: grid;
+  grid-template-columns: minmax(240px, 40%) 1fr;
+  gap: 24px;
+  align-items: start;
+}
+.info-bild {
+  background: #fff;
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: var(--schatten);
+}
+.info-bild svg {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+}
+.info-text ul {
+  padding-left: 1.1em;
+  line-height: 1.55;
+  font-size: 1.1rem;
+}
+.station-typ {
+  color: var(--orange);
+  font-weight: 700;
+  margin: 0;
+}
+.knopf.los {
+  margin: 12px 8px 12px 0;
+}
+.spiele-liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 8px;
+}
+.spiele-liste h3 {
+  width: 100%;
+}
+.spiel-chip {
+  border: 2px solid var(--rand);
+  background: #fff;
+  border-radius: 14px;
+  padding: 6px 12px;
+  min-height: 48px;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+}
+.spiel-chip.extra {
+  border-style: dashed;
+}
+
+/* ---------- Spiel-Container ---------- */
+.spiel {
+  position: relative;
+  min-height: calc(100dvh - 110px);
+  display: flex;
+  flex-direction: column;
+}
+.spiel-kopf {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.spiel-titel {
+  flex: 1;
+}
+.fortschritt {
+  height: 14px;
+  background: #e5dfcf;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.fortschritt div {
+  height: 100%;
+  background: linear-gradient(90deg, var(--moos), var(--wald));
+  border-radius: 999px;
+  transition: width 0.4s;
+}
+.spiel-flaeche {
+  flex: 1;
+  padding-bottom: 110px;
+}
+.pinsel-ecke {
+  position: fixed;
+  right: 12px;
+  bottom: 8px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  z-index: 40;
+  max-width: min(520px, 70vw);
+  pointer-events: none;
+}
+.pinsel-ecke > * {
+  pointer-events: auto;
+}
+.pinsel-ecke .sprechblase {
+  animation: rein 0.25s ease-out;
+}
+.stimmung-richtig .sprechblase {
+  border-color: var(--moos);
+  background: #f1f8ea;
+}
+.stimmung-tipp .sprechblase {
+  border-color: var(--orange);
+  background: #fff6ea;
+}
+.stimmung-loesung .sprechblase {
+  border-color: #3a6fc4;
+  background: #eef4fd;
+}
+.knopf.tipp {
+  background: var(--gelb);
+  color: var(--text);
+  box-shadow: 0 4px 0 #c08a10;
+}
+.huepft {
+  animation: huepf 0.5s;
+}
+.eichel-flug {
+  position: fixed;
+  right: 70px;
+  bottom: 90px;
+  width: 28px;
+  height: 28px;
+  background:
+    radial-gradient(circle at 50% 70%, #b07a3e 55%, transparent 56%),
+    radial-gradient(ellipse at 50% 25%, #6b4a2b 50%, transparent 52%);
+  animation: flug 0.8s ease-in forwards;
+  pointer-events: none;
+}
+
+/* ---------- Fragen ---------- */
+.frage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.frage h2 {
+  font-size: 1.3rem;
+  margin: 0.2em 0;
+  line-height: 1.3;
+}
+mark.fragewort {
+  background: #ffe08a;
+  color: #7a3a00;
+  border-radius: 6px;
+  padding: 0 4px;
+}
+.frage-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.frage-bild {
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 8px;
+  box-shadow: var(--schatten);
+}
+.optionen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin: 8px 0;
+}
+.optionen.mit-bild .option {
+  flex-direction: column;
+  width: 190px;
+}
+.option-wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.option {
+  min-height: 64px;
+  min-width: 140px;
+  padding: 10px 18px;
+  border-radius: 18px;
+  border: 3px solid var(--rand);
+  background: var(--karte);
+  box-shadow: 0 4px 0 var(--rand);
+  font-size: 1.05rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+.option:active {
+  transform: translateY(2px);
+}
+.option.gewaehlt {
+  border-color: var(--wald);
+  background: #e9f3e3;
+}
+.option.korrekt {
+  border-color: var(--moos);
+  background: #dff0d0;
+  box-shadow: 0 4px 0 var(--moos);
+}
+.option.gesperrt,
+.option:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.option.korrekt:disabled {
+  opacity: 1;
+}
+.option-bild {
+  width: 120px;
+  height: 120px;
+}
+.haken {
+  color: var(--wald);
+  font-weight: 700;
+}
+.daumen {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+.daumen .option {
+  min-width: 180px;
+  min-height: 90px;
+  font-size: 1.3rem;
+}
+.freitext {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.eingabe {
+  min-width: 260px;
+  min-height: 60px;
+  border: 3px solid var(--moos);
+  border-radius: 14px;
+  background: #fff;
+  font-size: 1.6rem;
+  padding: 6px 16px;
+  text-align: left;
+  letter-spacing: 1px;
+}
+.eingabe.gross {
+  font-size: 2rem;
+}
+.platzhalter {
+  color: #aaa;
+  font-size: 1.1rem;
+}
+.cursor {
+  animation: blinken 1s steps(1) infinite;
+  color: var(--wald);
+}
+.schreibweise {
+  font-size: 1.2rem;
+  color: #3a6fc4;
+}
+.schreibweise.gross {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.schreibweise.ok {
+  color: var(--wald);
+}
+.blitz {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--rot);
+  text-align: right;
+}
+
+/* ---------- Tastatur ---------- */
+.tastatur {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 10px 0;
+  user-select: none;
+}
+.tastatur-reihe {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+.taste {
+  min-width: 56px;
+  height: 58px;
+  border-radius: 10px;
+  border: none;
+  background: #fff;
+  box-shadow: 0 3px 0 var(--rand);
+  font-size: 1.35rem;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.taste:active {
+  transform: translateY(2px);
+  background: #e9f3e3;
+}
+.taste.breit {
+  min-width: 90px;
+}
+.taste.leer {
+  min-width: 300px;
+  font-size: 0.9rem;
+}
+.taste.aktiv {
+  background: var(--gelb);
+}
+.taste.ok {
+  background: var(--wald);
+  color: #fff;
+  font-size: 1rem;
+}
+
+/* ---------- Ziehen / Karten ---------- */
+.zieh-karte {
+  min-height: var(--ziel);
+  min-width: var(--ziel);
+  border: 3px solid var(--rand);
+  background: var(--karte);
+  border-radius: 16px;
+  padding: 6px 10px;
+  box-shadow: 0 4px 0 var(--rand);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 1rem;
+  position: relative;
+}
+.zieh-karte.aktiv {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 4px rgba(217, 130, 43, 0.35);
+  transform: translateY(-4px);
+}
+.zieh-karte.ziehen {
+  z-index: 60;
+  cursor: grabbing;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  transition: none;
+}
+.zieh-karte.wort {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.karte-inhalt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+.karte-bild {
+  width: 84px;
+  height: 84px;
+}
+.karte-inhalt.klein .karte-bild {
+  width: 60px;
+  height: 60px;
+}
+.karte-text {
+  text-align: center;
+  line-height: 1.2;
+}
+.karte-inhalt.klein .karte-text {
+  font-size: 0.85rem;
+}
+.stapel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 12px 0;
+  min-height: 80px;
+}
+.stapel.senkrecht {
+  flex-direction: column;
+}
+.mit-speak {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+.drop-hover,
+.bereit:hover {
+  outline: 4px dashed var(--orange);
+  outline-offset: 2px;
+}
+.wackeln {
+  animation: wackeln 0.4s;
+  display: inline-block;
+}
+.noch {
+  align-self: center;
+  font-weight: 700;
+}
+
+/* Sortieren */
+.koerbe {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0;
+}
+.korb {
+  background: #f1ead8;
+  border: 3px dashed #c9b98a;
+  border-radius: 18px;
+  min-height: 170px;
+  padding: 8px;
+  cursor: pointer;
+}
+.korb-kopf {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  font-size: 0.95rem;
+}
+.korb-bild {
+  width: 52px;
+  height: 52px;
+}
+.korb-inhalt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: center;
+  margin-top: 6px;
+}
+.abgelegt {
+  background: #fff;
+  border-radius: 10px;
+  padding: 2px 6px;
+  animation: rein 0.3s;
+}
+.abgelegt .karte-bild {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/* Beschriften */
+.label-flaeche {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.label-game.hoch .label-flaeche {
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+.label-bild {
+  position: relative;
+  width: min(100%, 980px);
+}
+.label-game.breit .label-bild {
+  width: min(100%, 980px, calc((100dvh - 330px) * 1.8));
+}
+.label-game.hoch .label-bild {
+  width: min(52vh, 460px);
+}
+.label-bild > svg:first-child {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #fff;
+  border-radius: 20px;
+}
+.label-linien {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.label-box {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 120px;
+  min-height: 48px;
+  background: #fff;
+  border: 3px dashed var(--orange);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 0.95rem;
+}
+.label-box.gefuellt {
+  border: 3px solid var(--moos);
+  background: #f1f8ea;
+  animation: rein 0.3s;
+}
+.label-stapel {
+  max-width: 980px;
+}
+.label-game.hoch .label-stapel {
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Raster */
+.raster {
+  display: grid;
+  gap: 6px;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+.raster-kopf {
+  background: var(--wald);
+  color: #fff;
+  border-radius: 10px;
+  padding: 6px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.raster-kopf.zeile {
+  background: var(--rinde);
+}
+.raster-zelle {
+  background: #fff;
+  border: 3px dashed var(--rand);
+  border-radius: 12px;
+  min-height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  cursor: pointer;
+}
+.raster-zelle .karte-bild {
+  width: 64px !important;
+  height: 64px !important;
+}
+.raster-stapel .karte-bild {
+  width: 84px !important;
+  height: 84px !important;
+}
+
+/* Memory */
+.memory {
+  display: grid;
+  gap: 10px;
+  max-width: min(700px, 82vh);
+  margin: 0 auto;
+}
+.memory-karte {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  border: none;
+  background: var(--wald);
+  box-shadow: 0 4px 0 #1f4a28;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: transform 0.25s;
+  padding: 4px;
+}
+.memory-karte.auf {
+  background: #fff;
+  box-shadow: 0 4px 0 var(--rand);
+  transform: rotateY(0);
+  animation: drehen 0.3s;
+}
+.memory-karte.gefunden {
+  background: #dff0d0;
+  opacity: 0.85;
+}
+.memory-ruecken {
+  font-size: 2.2rem;
+}
+
+/* Reihenfolge */
+.slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+}
+.slot {
+  min-width: 140px;
+  min-height: 110px;
+  max-width: 220px;
+  background: #fff;
+  border: 3px dashed var(--rand);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 6px;
+  cursor: pointer;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+.slot.naechster {
+  border-color: var(--orange);
+}
+.slot.belegt {
+  border-style: solid;
+  border-color: var(--moos);
+}
+.slot-nr {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: var(--wald);
+  color: #fff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.slot-leer {
+  font-size: 2rem;
+  color: var(--rand);
+}
+.puzzle-bau {
+  display: flex;
+  justify-content: center;
+}
+.puzzle-turm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 20px;
+  padding: 10px 30px;
+  min-height: 200px;
+  box-shadow: var(--schatten);
+}
+.puzzle-stufe {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  animation: rein 0.3s;
+}
+.puzzle-frei {
+  border: 3px dashed var(--orange);
+  border-radius: 12px;
+  padding: 10px 20px;
+  margin-bottom: 4px;
+  order: -1;
+}
+
+/* Lückentext */
+.cloze-text {
+  font-size: 1.2rem;
+  line-height: 2.2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.luecke {
+  display: inline-block;
+  min-width: 120px;
+  border-bottom: 3px solid var(--orange);
+  text-align: center;
+  cursor: pointer;
+  color: #999;
+  padding: 0 6px;
+  border-radius: 6px;
+}
+.luecke.gefuellt {
+  color: var(--wald);
+  font-weight: 700;
+  border-color: var(--moos);
+}
+.luecke.aktiv {
+  background: #fff3d6;
+}
+.luecke.gross {
+  min-width: 60px;
+  font-size: 2.4rem;
+  color: var(--orange);
+}
+.wortspeicher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  background: #f1ead8;
+  border-radius: 18px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+/* Rätsel */
+.riddle-flaeche {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.riddle-bild {
+  width: 180px;
+  height: 180px;
+  background: #fff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--schatten);
+}
+.riddle-bild svg {
+  width: 160px;
+  height: 160px;
+}
+.silhouette {
+  font-size: 5rem;
+  color: var(--rand);
+}
+.hinweise {
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+.hinweise li {
+  animation: rein 0.3s;
+}
+
+/* Baum-Detektiv */
+.key-game {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.key-bilder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.key-bild {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--schatten);
+}
+.key-pfad {
+  font-size: 0.85rem;
+  color: #666;
+  padding-left: 1em;
+}
+.steckbrief {
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px 18px;
+  box-shadow: var(--schatten);
+}
+
+/* Nahrungskette & Netz */
+.kette-slots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0;
+}
+.kette-slot-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pfeil {
+  font-size: 2.4rem;
+  color: var(--rinde);
+}
+.netz-flaeche {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 8;
+  background: #f4efe0;
+  border-radius: 20px;
+}
+.netz-linien {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.netz-knoten {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 3px solid var(--rand);
+  border-radius: 18px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  min-width: 96px;
+}
+.netz-knoten.aktiv {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 5px rgba(217, 130, 43, 0.35);
+}
+.art-wahl {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--papier);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  z-index: 70;
+  text-align: center;
+}
+.legende.energie {
+  color: #b07a10;
+}
+
+/* Wimmelbild */
+.wimmel {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 12px;
+}
+.wimmel-box {
+  overflow: hidden;
+  border-radius: 20px;
+  background: #ddd;
+  position: relative;
+  box-shadow: var(--schatten);
+  max-height: calc(100dvh - 190px);
+}
+.wimmel-box svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.05s;
+}
+.wimmel.hoch .wimmel-box {
+  aspect-ratio: 2 / 3;
+  max-width: 520px;
+}
+.wimmel-objekt {
+  cursor: pointer;
+}
+.lupe-glow {
+  fill: rgba(246, 195, 59, 0.35);
+  stroke: var(--gelb);
+  stroke-width: 10;
+  animation: puls 0.6s infinite;
+}
+.wimmel-knoepfe {
+  display: flex;
+  flex-wrap: wrap;
+}
+.zaehler-anzeige {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.kompass {
+  width: 120px;
+  height: 80px;
+  border: 2px solid var(--wald);
+  border-radius: 8px;
+  position: relative;
+  margin: 8px 0;
+  background: #fff;
+}
+.kompass div {
+  position: absolute;
+  border: 2px solid var(--orange);
+  background: rgba(217, 130, 43, 0.2);
+  border-radius: 4px;
+}
+
+/* Lift */
+.lift-game {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 16px;
+}
+.lift-schacht {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--schatten);
+}
+.etage {
+  min-height: 86px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  position: relative;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+}
+.etage-krone {
+  background: #bfe0a8;
+}
+.etage-strauch {
+  background: #a8cf6a;
+}
+.etage-kraut {
+  background: #8db255;
+}
+.etage-moos {
+  background: #6e9e43;
+  color: #fff;
+}
+.etage-wurzel {
+  background: #7a5a3a;
+  color: #fff;
+}
+.etage.hier {
+  outline: 5px solid var(--gelb);
+  outline-offset: -5px;
+}
+.etage-nr {
+  font-size: 1.6rem;
+  font-weight: 700;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.etage-name {
+  font-weight: 700;
+  min-width: 150px;
+}
+.etage-tiere {
+  display: flex;
+  flex-wrap: wrap;
+}
+.lift-tier {
+  width: 70px;
+  height: 70px;
+  margin-left: auto;
+  animation: rein 0.3s;
+}
+.lift-gast {
+  width: 140px;
+  height: 140px;
+}
+.lift-steuer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.lift-knoepfe {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  max-width: 320px;
+}
+.lift-knopf {
+  justify-content: flex-start;
+}
+
+/* Suchsel */
+.suchsel-game {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.suchsel {
+  display: grid;
+  gap: 3px;
+  width: min(66vh, 620px);
+  user-select: none;
+}
+.suchsel-zelle {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  min-width: 0;
+}
+.suchsel-zelle.gefunden {
+  background: #cfe8b5;
+}
+.suchsel-zelle.start,
+.suchsel-zelle.vorschau {
+  background: var(--gelb);
+}
+.suchsel-zelle.tipp {
+  background: var(--orange);
+  color: #fff;
+}
+.suchsel-liste ul {
+  list-style: none;
+  padding: 0;
+  columns: 2;
+}
+.suchsel-liste li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  break-inside: avoid;
+}
+.suchsel-liste li.gefunden span {
+  text-decoration: line-through;
+  color: var(--moos);
+}
+
+/* Buchstabensuppe */
+.suppe-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.suppe-bild {
+  width: 170px;
+  height: 170px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: var(--schatten);
+}
+.suppe-wort {
+  display: flex;
+  gap: 6px;
+}
+.buchstabe-slot {
+  width: 52px;
+  height: 60px;
+  border-bottom: 4px solid var(--wald);
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buchstabe-slot.fix {
+  color: var(--orange);
+}
+.kacheln {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.kachel {
+  width: 62px;
+  height: 62px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  background: #f4d9a8;
+  box-shadow: 0 4px 0 #c9a86a;
+  cursor: pointer;
+}
+.kachel:disabled {
+  opacity: 0.25;
+}
+
+/* Kreuzwort */
+.kreuz-game {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+}
+.kreuz-gitter {
+  display: grid;
+  gap: 2px;
+  width: min(56vw, 600px);
+}
+.kreuz-zelle {
+  aspect-ratio: 1;
+  border: 2px solid var(--text);
+  background: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  position: relative;
+  padding: 0;
+  min-width: 0;
+  cursor: pointer;
+}
+.kreuz-zelle.aktiv {
+  background: #fff3d6;
+}
+.kreuz-zelle.cursor {
+  background: var(--gelb);
+}
+.kreuz-nr {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  font-size: 0.55rem;
+}
+.kreuz-leer {
+  aspect-ratio: 1;
+}
+.kreuz-hinweise ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.kreuz-hinweise li {
+  display: flex;
+  align-items: center;
+}
+.kreuz-hinweise li button {
+  border: none;
+  background: none;
+  text-align: left;
+  min-height: 48px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+.kreuz-hinweise li.aktiv button {
+  background: #fff3d6;
+  border-radius: 8px;
+}
+.kreuz-hinweise li.gefunden {
+  color: var(--moos);
+  text-decoration: line-through;
+}
+.kreuz-game .tastatur .taste {
+  min-width: 44px;
+  height: 52px;
+}
+
+/* Lesedetektiv */
+.lese-game {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+.lese-text {
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px 16px;
+  box-shadow: var(--schatten);
+}
+.lese-text ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.zeile {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  font-size: 1.1rem;
+  min-height: 48px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.zeile.gelb {
+  background: #ffe86a;
+}
+.zeile.versuch {
+  background: #f3efe4;
+}
+.zeilen-nr {
+  display: inline-block;
+  width: 28px;
+  color: #888;
+  font-weight: 700;
+}
+
+/* Fehlerwörter */
+.fehler-satz {
+  font-size: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+.satz-wort {
+  border: none;
+  background: #fff;
+  border-radius: 10px;
+  padding: 6px 10px;
+  min-height: 52px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 3px 0 var(--rand);
+}
+.satz-wort.aktiv {
+  background: #ffe0d6;
+}
+.satz-wort.korrigiert {
+  background: #dff0d0;
+}
+.satz-wort s {
+  color: var(--rot);
+}
+
+/* Werkstatt */
+.kacheln-gross {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+.werkstatt-kachel {
+  min-height: 110px;
+  border-radius: 18px;
+  border: 3px solid var(--rand);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 var(--rand);
+}
+.werkstatt-kachel.kiste {
+  border-color: var(--orange);
+}
+.werkstatt-aufgabe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.werkstatt-bild {
+  width: 130px;
+  height: 130px;
+}
+.luecken-wort {
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 6px 0;
+}
+.regel {
+  background: #fff6ea;
+  border-radius: 14px;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+}
+.option.silbe {
+  font-size: 1.4rem;
+}
+
+/* Vorrat */
+.cache-flaeche {
+  position: relative;
+  aspect-ratio: 16 / 8;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(#e9e4d4, #c9a04a);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.cache-game.winter .cache-flaeche {
+  background: linear-gradient(#e6eef3, #fff);
+}
+.versteck {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 96px;
+  min-height: 70px;
+  border-radius: 16px;
+  border: 3px solid #8a6a44;
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+.cache-game.winter .versteck {
+  background: #fff;
+  border-color: #b7cbd8;
+  box-shadow: 0 6px 0 #dfe8ee;
+}
+.versteck.offen {
+  opacity: 0.7;
+}
+.versteck-name {
+  font-size: 0.8rem;
+}
+.cache-pinsel {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+}
+.cache-text {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+/* Waldputz */
+.waldputz-wald {
+  position: relative;
+  aspect-ratio: 16 / 8;
+  border-radius: 20px;
+  background: linear-gradient(#cde7f0 30%, #7fa650 30%);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.muell-im-wald {
+  position: absolute;
+  border: none;
+  background: none;
+  cursor: pointer;
+  min-width: var(--ziel);
+  min-height: var(--ziel);
+}
+.tonnen {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.tonne {
+  color: #fff;
+  border-radius: 16px 16px 24px 24px;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  padding: 6px;
+  font-size: 0.85rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.tonne span {
+  font-size: 2rem;
+}
+.weg {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+.weg li {
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 220px;
+  text-align: center;
+  box-shadow: var(--schatten);
+}
+
+/* Blatt-Labor */
+.labor-flaeche {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.labor-blatt {
+  width: min(48vh, 420px);
+  position: relative;
+  cursor: pointer;
+  border-radius: 24px;
+}
+.labor-blatt > svg {
+  width: 100%;
+  height: auto;
+}
+.labor-drin {
+  position: absolute;
+  top: 35%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+.labor-produkt {
+  position: absolute;
+  bottom: 18%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #fff;
+  animation: rein 0.6s;
+}
+.labor-produkt span {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
+  padding: 2px 8px;
+}
+.labor-herbst {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.labor-stufe-bild {
+  width: 220px;
+  height: 220px;
+}
+.labor-stufe-bild.faellt {
+  animation: fallen 1.6s forwards;
+}
+.regler {
+  width: min(600px, 90%);
+  height: 48px;
+  accent-color: var(--orange);
+}
+.regler-beschriftung {
+  width: min(600px, 90%);
+  display: flex;
+  justify-content: space-between;
+}
+.ergebnis-text {
+  text-align: center;
+  font-size: 1.15rem;
+}
+
+/* ---------- Abschluss ---------- */
+.abschluss {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding-top: 16px;
+}
+.station-name {
+  font-size: 1.2rem;
+  margin: 0;
+}
+.spiel-ergebnisse {
+  list-style: none;
+  padding: 0;
+}
+.verdient {
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.neu-karten {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mini-karte {
+  background: #fff;
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--schatten);
+  animation: rein 0.5s;
+}
+.medaille {
+  font-size: 2rem;
+}
+.konfetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 80;
+}
+.konfetti span {
+  position: absolute;
+  top: -20px;
+  width: 14px;
+  height: 9px;
+  border-radius: 0 60% 0 60%;
+  animation-name: konfetti;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+/* ---------- Waldbuch ---------- */
+.kopfzeile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.karten-raster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.sammelkarte {
+  border: 3px solid var(--rand);
+  border-radius: 18px;
+  background: #fff;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: 0 4px 0 var(--rand);
+  min-height: 170px;
+  justify-content: center;
+}
+.sammelkarte.frei {
+  border-color: var(--moos);
+}
+.sammelkarte.zu {
+  cursor: default;
+  background: #f1ede2;
+}
+.sammel-bild {
+  width: 110px;
+  height: 110px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+}
+.sammel-bild svg {
+  width: 100%;
+  height: 100%;
+}
+.sammelkarte.zu .sammel-bild svg {
+  filter: brightness(0) opacity(0.25);
+}
+.fragezeichen {
+  position: absolute;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--wald);
+}
+.sammel-name {
+  font-weight: 700;
+}
+.sammel-fort {
+  font-size: 0.8rem;
+  color: #777;
+}
+.karte-detail ul {
+  text-align: left;
+  line-height: 1.6;
+}
+.detail-bild {
+  width: 200px;
+  height: 200px;
+}
+.ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* ---------- Mein Wald ---------- */
+.mw-kopf {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.waldart-anzeige {
+  font-weight: 700;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 14px;
+  border: 3px solid var(--moos);
+}
+.lichtung {
+  position: relative;
+  aspect-ratio: 16 / 7;
+  border-radius: 24px;
+  overflow: hidden;
+  margin: 8px 0;
+  box-shadow: var(--schatten);
+  background: linear-gradient(#cde7f0 25%, #7fa650 25%);
+}
+.lichtung.jz-fruehling {
+  background: linear-gradient(#dff0f6 25%, #a8cf6a 25%);
+}
+.lichtung.jz-herbst {
+  background: linear-gradient(#ece5d0 25%, #c9a04a 25%);
+}
+.lichtung.jz-winter {
+  background: linear-gradient(#e6eef3 25%, #ffffff 25%);
+}
+.lichtung.hg-extra {
+  background-image:
+    radial-gradient(circle at 85% 12%, #ffe9a8 0 6%, transparent 7%),
+    linear-gradient(#cde7f0 25%, #7fa650 25%);
+}
+.mw-objekt {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  cursor: grab;
+  touch-action: none;
+}
+.mw-objekt svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.mw-pinsel {
+  position: absolute;
+  left: 8px;
+  bottom: 4px;
+}
+.shop {
+  background: #fff;
+  border-radius: 20px;
+  padding: 8px 12px;
+  box-shadow: var(--schatten);
+}
+.shop-tabs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.kontostand {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+}
+.shop-leiste {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px 0;
+}
+.shop-item {
+  min-width: 96px;
+  border: 2px solid var(--rand);
+  border-radius: 14px;
+  background: var(--papier);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 0.8rem;
+}
+.shop-item:disabled {
+  opacity: 0.4;
+}
+
+/* ---------- Zettel, Eltern ---------- */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+}
+th,
+td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--rand);
+  text-align: left;
+}
+th {
+  background: var(--wald);
+  color: #fff;
+}
+td.symbol {
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-align: center;
+}
+td.haken {
+  color: var(--wald);
+  font-weight: 700;
+}
+.eltern section {
+  background: #fff;
+  border-radius: 18px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--schatten);
+}
+.eltern section table {
+  box-shadow: none;
+}
+.einstellungen label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+}
+.eltern input,
+.eltern select,
+.eltern-zugang input {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 2px solid var(--rand);
+  min-height: 44px;
+}
+.eltern-zugang {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-top: 40px;
+}
+.eltern-zugang label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+}
+.fehler {
+  color: var(--rot);
+}
+.warnung {
+  background: #fde9e6;
+  border-radius: 12px;
+  padding: 8px 12px;
+  margin-top: 8px;
+}
+
+/* Abzeichen */
+.rang-karte {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: #fff;
+  border-radius: 20px;
+  padding: 12px 18px;
+  box-shadow: var(--schatten);
+}
+.rang-karte > div {
+  flex: 1;
+}
+.raenge li.erreicht {
+  color: var(--wald);
+  font-weight: 700;
+}
+.medaillen {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+}
+.medaille-karte {
+  background: #f1ede2;
+  border-radius: 16px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  opacity: 0.7;
+}
+.medaille-karte.hat {
+  background: #fff7dc;
+  border: 3px solid var(--gelb);
+  opacity: 1;
+}
+.medaille-karte small {
+  font-size: 0.75rem;
+}
+
+/* Tagesaufgabe */
+.tagesaufgabe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+/* Urkunde */
+.urkunde-seite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+.urkunde {
+  width: 190mm;
+  min-height: 260mm;
+  max-width: 100%;
+  background: #fffdf5;
+  border: 10px double var(--wald);
+  padding: 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 1.3rem;
+}
+.urkunde.gold {
+  border-color: #c99a10;
+}
+.urkunde h1 {
+  font-size: 3rem;
+}
+.urkunde-klein {
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+.urkunde-name {
+  font-size: 2.4rem;
+  font-weight: 700;
+  border-bottom: 2px solid var(--text);
+  padding: 0 30px;
+}
+.unterschrift {
+  font-style: italic;
+  margin-top: 30px;
+}
+
+/* Dev */
+.dev-raster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+.dev figure {
+  margin: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: 6px;
+  font-size: 0.7rem;
+}
+.dev figure svg {
+  width: 100%;
+  height: 120px;
+}
+
+/* ---------- Animationen ---------- */
+@keyframes rein {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes puls {
+  50% {
+    transform: scale(1.08);
+  }
+}
+@keyframes huepf {
+  30% {
+    transform: translateY(-22px);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes flug {
+  to {
+    transform: translate(calc(-100vw + 360px), calc(-100vh + 140px)) scale(0.6);
+    opacity: 0.2;
+  }
+}
+@keyframes wackeln {
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+@keyframes stern {
+  from {
+    transform: scale(0) rotate(-90deg);
+  }
+}
+@keyframes blinken {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes drehen {
+  from {
+    transform: rotateY(90deg);
+  }
+}
+@keyframes konfetti {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+  }
+}
+@keyframes fallen {
+  to {
+    transform: translateY(160px) rotate(60deg);
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .eichel-flug,
+  .konfetti {
+    display: none;
+  }
+}
+
+/* ---------- Kleinere Bildschirme ---------- */
+@media (max-width: 1000px) {
+  .station-info,
+  .key-game,
+  .lese-game,
+  .lift-game,
+  .wimmel,
+  .suchsel-game,
+  .kreuz-game {
+    grid-template-columns: 1fr;
+  }
+  .suchsel {
+    width: min(92vw, 560px);
+  }
+  .kreuz-gitter {
+    width: min(92vw, 560px);
+  }
+  .info-bild svg {
+    max-height: 32vh;
+  }
+}
+@media (max-width: 700px) {
+  :root {
+    font-size: 17px;
+  }
+  .menue a span {
+    display: none;
+  }
+  .waldkarte {
+    aspect-ratio: auto;
+    height: 900px;
+    max-height: none;
+  }
+  .ort-knopf {
+    width: 90px;
+  }
+  .ort-bild {
+    width: 56px;
+    height: 56px;
+  }
+  .tonnen {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .taste {
+    min-width: 30px;
+    height: 50px;
+    font-size: 1.1rem;
+  }
+  .taste.leer {
+    min-width: 140px;
+  }
+  .label-box {
+    min-width: 72px;
+    font-size: 0.75rem;
+  }
+  .option {
+    min-width: 110px;
+  }
+}
+
+@media print {
+  .leiste,
+  .nicht-drucken,
+  .pinsel-ecke {
+    display: none !important;
+  }
+  body,
+  .urkunde-seite {
+    background: #fff;
+    padding: 0;
+  }
+  .urkunde {
+    width: 190mm;
+    height: 270mm;
+    min-height: 0;
+    page-break-inside: avoid;
+  }
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+}
