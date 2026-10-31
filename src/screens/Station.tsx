@@ -13,6 +13,7 @@ import { Pinsel } from '../components/Pinsel';
 import { Eichel, Rich, SpeakButton, Sterne } from '../components/ui';
 import { sound } from '../lib/sound';
 import { sprich } from '../lib/tts';
+import { useOhneKopfleiste } from '../lib/vollbild';
 import { useProgress } from '../store/progress';
 import { useSettings } from '../store/settings';
 
@@ -46,6 +47,7 @@ function StationAblauf() {
   const [ergebnisse, setErgebnisse] = useState<{ titel: string; sterne: number }[]>([]);
   const [eicheln, setEicheln] = useState(0);
   const einzeln = nr !== undefined;
+  useOhneKopfleiste();
 
   useEffect(() => {
     if (phase === 'info' && autoVorlesen && station) sprich(station.info.saetze.join(' '));
@@ -88,67 +90,72 @@ function StationAblauf() {
 
   if (phase === 'info')
     return (
-      <div className="station-info">
-        <div className="info-bild">
-          <Img id={station.info.bild} />
-        </div>
-        <div className="info-text">
-          <p className="station-typ">
-            {station.typ === 'pflicht'
-              ? '! Pflichtstation'
-              : station.typ === 'zusatz'
-                ? '★ Zusatzstation'
-                : station.typ === 'abschluss'
-                  ? '🏅 Abschluss'
-                  : 'Werkstatt'}
-            {station.schulNr ? ` · Station ${station.schulNr}` : ''}
-          </p>
-          <h1>{station.titel}</h1>
-          <ul>
-            {station.info.saetze.map((s) => (
-              <li key={s}>
-                <Rich text={s} />
-              </li>
-            ))}
-          </ul>
-          <SpeakButton text={station.info.saetze.join(' ')} label="Infotext vorlesen" />
-          <button
-            type="button"
-            className="knopf gross los"
-            onClick={() => {
-              setSpiel(0);
-              setErgebnisse([]);
-              setPhase('spiel');
-            }}
-          >
-            Los geht’s!
-          </button>
-          <div className="spiele-liste">
-            <h3>Spiele einzeln wiederholen</h3>
-            {station.spiele.map((s, i) => (
-              <Link key={i} to={`/station/${station.id}/spiel/${i}`} className="spiel-chip">
-                {s.titel} <Sterne n={stand[station.id]?.bestProSpiel[String(i)] ?? 0} />
-              </Link>
-            ))}
-            {extras.map((k) => (
-              <button key={k} type="button" className="spiel-chip extra" onClick={() => setExtra(k)}>
-                ➕ Mehr üben:{' '}
-                {configs[k].kind === 'truefalse'
-                  ? 'Richtig oder falsch'
-                  : configs[k].kind === 'quiz'
-                    ? 'Quiz'
-                    : configs[k].kind === 'riddle'
-                      ? 'Wer bin ich?'
-                      : configs[k].kind === 'memory'
-                        ? 'Memory'
-                        : configs[k].kind === 'cloze'
-                          ? 'Lückentext'
-                          : 'Sortieren'}
-              </button>
-            ))}
+      <>
+        <Link to="/" className="knopf leise zurueck">
+          ← Waldkarte
+        </Link>
+        <div className="station-info">
+          <div className="info-bild">
+            <Img id={station.info.bild} />
+          </div>
+          <div className="info-text">
+            <p className="station-typ">
+              {station.typ === 'pflicht'
+                ? '! Pflichtstation'
+                : station.typ === 'zusatz'
+                  ? '★ Zusatzstation'
+                  : station.typ === 'abschluss'
+                    ? '🏅 Abschluss'
+                    : 'Werkstatt'}
+              {station.schulNr ? ` · Station ${station.schulNr}` : ''}
+            </p>
+            <h1>{station.titel}</h1>
+            <ul>
+              {station.info.saetze.map((s) => (
+                <li key={s}>
+                  <Rich text={s} />
+                </li>
+              ))}
+            </ul>
+            <SpeakButton text={station.info.saetze.join(' ')} label="Infotext vorlesen" />
+            <button
+              type="button"
+              className="knopf gross los"
+              onClick={() => {
+                setSpiel(0);
+                setErgebnisse([]);
+                setPhase('spiel');
+              }}
+            >
+              Los geht’s!
+            </button>
+            <div className="spiele-liste">
+              <h3>Spiele einzeln wiederholen</h3>
+              {station.spiele.map((s, i) => (
+                <Link key={i} to={`/station/${station.id}/spiel/${i}`} className="spiel-chip">
+                  {s.titel} <Sterne n={stand[station.id]?.bestProSpiel[String(i)] ?? 0} />
+                </Link>
+              ))}
+              {extras.map((k) => (
+                <button key={k} type="button" className="spiel-chip extra" onClick={() => setExtra(k)}>
+                  ➕ Mehr üben:{' '}
+                  {configs[k].kind === 'truefalse'
+                    ? 'Richtig oder falsch'
+                    : configs[k].kind === 'quiz'
+                      ? 'Quiz'
+                      : configs[k].kind === 'riddle'
+                        ? 'Wer bin ich?'
+                        : configs[k].kind === 'memory'
+                          ? 'Memory'
+                          : configs[k].kind === 'cloze'
+                            ? 'Lückentext'
+                            : 'Sortieren'}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
 
   if (phase === 'spiel') {

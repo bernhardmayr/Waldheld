@@ -496,6 +496,9 @@ fieldset legend {
   line-height: 1.55;
   font-size: 1.1rem;
 }
+.knopf.zurueck {
+  margin: 0 0 8px;
+}
 .station-typ {
   color: var(--orange);
   font-weight: 700;
@@ -2501,6 +2504,42 @@ td.haken {
 @media (max-width: 700px) {
   :root {
     font-size: 17px;
+  }
+  .leiste {
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 4px 8px;
+  }
+  .logo span,
+  .rang .rang-name {
+    display: none;
+  }
+  .rang {
+    padding: 6px 8px;
+  }
+  .eicheln {
+    font-size: 1rem;
+    padding: 2px 10px 2px 4px;
+  }
+  .menue {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0;
+    min-width: 0;
+  }
+  .info-bild {
+    padding: 6px;
+  }
+  .info-bild svg {
+    max-height: 24vh;
+  }
+  .station-info {
+    gap: 10px;
+  }
+  .menue a {
+    min-width: 48px;
+    font-size: 1.25rem;
+    flex: none;
   }
   .pinsel-ecke {
     left: 8px;

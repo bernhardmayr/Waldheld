@@ -71,7 +71,7 @@ export function Layout() {
           <Eichel /> <strong id="eichel-zaehler">{eicheln}</strong>
         </div>
         <NavLink to="/abzeichen" className="rang" title="Rang und Abzeichen">
-          🏅 {rang.name}
+          🏅 <span className="rang-name">{rang.name}</span>
         </NavLink>
         <nav className="menue" aria-label="Hauptmenü">
           <NavLink
