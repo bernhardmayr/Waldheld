@@ -44,6 +44,10 @@ Stand: 30.10.2026. Alle Phasen 0–5 sind in einer ersten vollständigen Fassung
 - [x] Waldprüfung (20 Aufgaben, ab 80 % Urkunde, Druckansicht A4), Station E4 mit G21 Waldputz
 - [x] Töne (Web Audio), Konfetti, `prefers-reduced-motion`, Pausen-Hinweis nach 20 Minuten
 
+## Nach der ersten Testrunde
+- [x] Im Spiel wird die Kopfleiste ausgeblendet (mehr Platz, vor allem auf dem Handy); Eicheln stehen klein im Spielkopf
+- [x] Pinsels Sprechblase lässt sich per ✕ oder Antippen schließen; Lob verschwindet nach 2,5 s von selbst
+
 ## Tests
 - `npm test`: answerCheck, scoring, leitner, unlock, beide Generatoren, Content-Validierung
   (factIds, AssetIds, ≥ 2 Spiele je Pflichtstation, ≥ 20 Aufgaben je Modul, Heft-Netz, 17 Lift-Tiere)

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { GameConfig, GameType } from '../content/types';
 import { GAMES } from '../games/registry';
 import { GameContext, sterneFuer, type GameApi, type GameResult, type Stimmung } from '../games/common';
@@ -8,7 +8,7 @@ import { useProgress } from '../store/progress';
 import { useSettings } from '../store/settings';
 import { useRang } from '../app/Layout';
 import { Pinsel, type Pose } from './Pinsel';
-import { Fortschritt, SpeakButton } from './ui';
+import { Eichel, Fortschritt, SpeakButton } from './ui';
 
 const POSE: Record<Stimmung, Pose> = {
   richtig: 'freut',
@@ -41,7 +41,21 @@ export function GamePlayer({
 }) {
   const autoVorlesen = useSettings((s) => s.autoVorlesen);
   const rang = useRang();
-  const [msg, setMsg] = useState<{ text: string; stimmung: Stimmung } | null>(null);
+  const [msg, setMsg] = useState<{ text: string; stimmung: Stimmung; nr: number } | null>(null);
+  const eicheln = useProgress((s) => s.eicheln);
+
+  // Im Spiel keine Kopfleiste: mehr Platz, besonders auf dem Handy
+  useEffect(() => {
+    document.body.classList.add('im-spiel');
+    return () => document.body.classList.remove('im-spiel');
+  }, []);
+
+  // Lob verschwindet von selbst, Tipps und Lösungen bleiben bis zum Wegtippen
+  useEffect(() => {
+    if (!msg || msg.stimmung !== 'richtig') return;
+    const t = setTimeout(() => setMsg((m) => (m?.nr === msg.nr ? null : m)), 2500);
+    return () => clearTimeout(t);
+  }, [msg]);
   const [tipp, setTipp] = useState<string | null>(null);
   const [fort, setFort] = useState({ d: 0, t: 1 });
   const [flieg, setFlieg] = useState(0);
@@ -61,7 +75,7 @@ export function GamePlayer({
         } else sound.falsch();
       },
       sag(text, stimmung) {
-        setMsg({ text, stimmung });
+        setMsg((m) => ({ text, stimmung, nr: (m?.nr ?? 0) + 1 }));
         if (stimmung === 'tipp') sound.falsch();
         if (autoVorlesen || stimmung === 'loesung' || stimmung === 'tipp') sprich(text);
       },
@@ -111,14 +125,37 @@ export function GamePlayer({
             <strong>{titel}</strong>
             <Fortschritt wert={gesamtFort * 100} max={100} />
           </div>
+          <div className="spiel-eicheln" aria-label={`${eicheln} Eicheln`}>
+            <Eichel size={24} /> <strong>{eicheln}</strong>
+          </div>
         </div>
         <div className="spiel-flaeche">
           <Game config={config} api={api} />
         </div>
         <div className={`pinsel-ecke ${msg ? 'spricht' : ''} stimmung-${msg?.stimmung ?? 'neutral'}`}>
           {msg && (
-            <div className="sprechblase" role="status" aria-live="polite">
-              {msg.text} <SpeakButton text={msg.text} klein />
+            <div
+              className="sprechblase"
+              role="status"
+              aria-live="polite"
+              onClick={() => setMsg(null)}
+              title="Antippen zum Schließen"
+            >
+              <span className="sprechblase-text">{msg.text}</span>
+              <span className="sprechblase-knoepfe">
+                <SpeakButton text={msg.text} klein />
+                <button
+                  type="button"
+                  className="schliessen"
+                  aria-label="Hinweis schließen"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMsg(null);
+                  }}
+                >
+                  ✕
+                </button>
+              </span>
             </div>
           )}
           <div key={flieg} className={`pinsel-huepf ${flieg && msg?.stimmung === 'richtig' ? 'huepft' : ''}`}>

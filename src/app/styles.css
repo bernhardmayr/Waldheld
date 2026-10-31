@@ -532,9 +532,15 @@ fieldset legend {
 }
 
 /* ---------- Spiel-Container ---------- */
+body.im-spiel .leiste {
+  display: none;
+}
+body.im-spiel .inhalt {
+  padding-top: 8px;
+}
 .spiel {
   position: relative;
-  min-height: calc(100dvh - 110px);
+  min-height: calc(100dvh - 32px);
   display: flex;
   flex-direction: column;
 }
@@ -580,6 +586,39 @@ fieldset legend {
 }
 .pinsel-ecke .sprechblase {
   animation: rein 0.25s ease-out;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+.sprechblase-text {
+  flex: 1;
+}
+.sprechblase-knoepfe {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.schliessen {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--rand);
+  background: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+.spiel-eicheln {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #fff;
+  border-radius: 999px;
+  padding: 4px 12px 4px 6px;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 0 var(--rand);
 }
 .stimmung-richtig .sprechblase {
   border-color: var(--moos);
@@ -2386,7 +2425,7 @@ td.haken {
 }
 @keyframes flug {
   to {
-    transform: translate(calc(-100vw + 360px), calc(-100vh + 140px)) scale(0.6);
+    transform: translate(40px, calc(-100dvh + 150px)) scale(0.6);
     opacity: 0.2;
   }
 }
@@ -2462,6 +2501,21 @@ td.haken {
 @media (max-width: 700px) {
   :root {
     font-size: 17px;
+  }
+  .pinsel-ecke {
+    left: 8px;
+    right: 8px;
+    max-width: none;
+  }
+  .pinsel-ecke .pinsel-huepf svg {
+    width: 64px;
+    height: 64px;
+  }
+  .knopf.tipp {
+    padding: 0.3em 0.6em;
+  }
+  .frage h2 {
+    font-size: 1.15rem;
   }
   .menue a span {
     display: none;
