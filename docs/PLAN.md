@@ -47,6 +47,7 @@ Stand: 30.10.2026. Alle Phasen 0–5 sind in einer ersten vollständigen Fassung
 ## Nach der ersten Testrunde
 - [x] Im Spiel wird die Kopfleiste ausgeblendet (mehr Platz, vor allem auf dem Handy); Eicheln stehen klein im Spielkopf
 - [x] Neue Versionen werden automatisch übernommen (Service Worker lädt die Seite einmal neu; Update-Prüfung stündlich und beim Zurückkehren in die App)
+- [x] Auch auf der Stationsseite keine Kopfleiste, dafür „← Waldkarte“; auf dem Handy ist die Kopfleiste einzeilig
 - [x] Pinsels Sprechblase lässt sich per ✕ oder Antippen schließen; Lob verschwindet nach 2,5 s von selbst
 
 ## Tests

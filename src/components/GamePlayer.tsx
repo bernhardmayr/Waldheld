@@ -7,6 +7,7 @@ import { sprich } from '../lib/tts';
 import { useProgress } from '../store/progress';
 import { useSettings } from '../store/settings';
 import { useRang } from '../app/Layout';
+import { useOhneKopfleiste } from '../lib/vollbild';
 import { Pinsel, type Pose } from './Pinsel';
 import { Eichel, Fortschritt, SpeakButton } from './ui';
 
@@ -45,10 +46,7 @@ export function GamePlayer({
   const eicheln = useProgress((s) => s.eicheln);
 
   // Im Spiel keine Kopfleiste: mehr Platz, besonders auf dem Handy
-  useEffect(() => {
-    document.body.classList.add('im-spiel');
-    return () => document.body.classList.remove('im-spiel');
-  }, []);
+  useOhneKopfleiste();
 
   // Lob verschwindet von selbst, Tipps und Lösungen bleiben bis zum Wegtippen
   useEffect(() => {
